@@ -1,9 +1,11 @@
 package com.example.newsapp
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.Response
@@ -26,7 +28,7 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
     }
     private fun fetchData()
     {
-        val url = "https://saurav.tech/NewsAPI/top-headlines/category/health/in.json"
+        val url = "https://saurav.tech/NewsAPI/top-headlines/category/science/in.json"
 //        val url = "https://newsapi.org/v2/everything?q=tesla&from=2021-09-08&sortBy=publishedAt&apiKey=18ba28c7c40c45cdab79d36ce42908ac"
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null,
             {
@@ -91,5 +93,8 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
 
 
     override fun onItemClicked(item: News) {
+        val builder = CustomTabsIntent.Builder()
+        val customTabsIntent = builder.build()
+        customTabsIntent.launchUrl(this, Uri.parse(item.url))
     }
 }
